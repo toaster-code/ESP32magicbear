@@ -1,7 +1,8 @@
 #include "Audio.h"
 #include "SD.h"
 #include "FS.h"
-#include "ezTouch.h"
+#include "ezButton.h"
+#include <string>
 
 // Digital I/O used
 #define SD_CS          5
@@ -16,8 +17,8 @@ Audio audio;
 
 // set pin numbers
 //setTouchThreshold = 40
-//ezButton button1(6);  // create ezButton object that attach to pin 6;
-ezTouch button2(T3);  // create ezButton object that attach to pin T3;
+ezButton button1(33);  // create ezButton object that attach to pin 33(T8);
+//ezTouch button2(T3);  // create ezButton object that attach to pin T3;
 
 
 // variable for storing the touch pin value 
@@ -37,18 +38,22 @@ void setup(){
     audio.connecttoFS(SD, "a02.wav");
     songNumber = 1;
 
-//    button1.setDebounceTime(50); // set debounce time to 50 milliseconds
-    button2.setDebounceTime(50);
+    button1.setDebounceTime(500); // set debounce time to milliseconds
+//    button2.setDebounceTime(50);
+
+
+// music list:
+string musicList[4] = {"a01.wav", "a02.wav", "a03.wav", "a04.wav"};
 }
 
 void loop(){
   touchValue_buffer = 0;
   audio.loop();
- // button1.loop();
-  button2.loop();
+  button1.loop();
+ // button2.loop();
   Serial.println(touchValue);  // get value of Touch 3 pin = GPIO 15
   
-  if(button2.isPressed()){
+  if(button1.isPressed()){
     audio.stopSong();
     if (songNumber == 0) {
       audio.connecttoFS(SD, "a03.wav");
