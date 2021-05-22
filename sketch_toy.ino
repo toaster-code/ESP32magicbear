@@ -25,6 +25,7 @@ int touchValue;
 int touchValue_buffer;
 int songNumber;
 
+
 void setup(){
     pinMode(SD_CS, OUTPUT);
     digitalWrite(SD_CS, HIGH);
